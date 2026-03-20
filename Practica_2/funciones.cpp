@@ -67,6 +67,7 @@ int problema_4(){
     cout<<"Ingrese un numero: "<<endl;
     cin>>cadena;
     cout<<"El numero convertido es: "<< char_a_int(cadena)<<endl;
+    liberarCadena(cadena);
     return 0;
 }
 int conver_a_mayusculas(char letra){
@@ -86,6 +87,7 @@ int Problema_6(){
         cadena[i]=conver_a_mayusculas(cadena[i]);
     }
     cout<< "En mayusculas: "<<cadena<<endl;
+    liberarCadena(cadena);
     return 0;
 }
 
@@ -112,6 +114,7 @@ int Problema_8(){
         }
     }
     cout<<"La cadena de numeros es: "<<numero<<endl<<"La cadena de texto es: "<<texto<<endl;
+    liberarCadena(cadena);
     return 0;
 }
 int dar_valor(char n){
@@ -142,6 +145,7 @@ void Problema_10(){
     cin>>cadena;
     cout<<"El numero ingresado es: "<<cadena;
     cout<<". El valor convertido es: "<<valor(cadena)<<endl;
+    liberarCadena(cadena);
 
 }
 int **crear_Matriz(int filas, int columnas){
