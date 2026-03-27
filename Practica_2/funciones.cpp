@@ -1,5 +1,8 @@
 #include "funciones.h"
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
+
 using namespace std;
 //aqui creo las funciones
 char *crear_cadena(const int tamaño){
@@ -13,15 +16,19 @@ void liberarCadena(char*& cadena) {
     delete[] cadena;
     cadena = nullptr;
 }
-unsigned int aleatorio(unsigned int &semilla){
-    semilla=(1103515245*semilla)%2147483648;
-    return semilla;
+int factorial(int n){
+    int facto=1;
+    for (int i=1; i<=n;i++){
+        facto=facto*i;
+    }
+    return facto;
 }
-void generar_imprimir_letras(char *arreglo, unsigned int &semilla, int tam){
+
+void generar_imprimir_letras(char *arreglo, int tam){
+    srand(time(0));
     cout<< "El arreglo generado es:"<<endl;
     for (int i=0; i<tam;i++){
-        int num = aleatorio(semilla)%26;
-        arreglo[i]='A'+num;
+        arreglo[i]='A'+rand()%26;
         cout<<arreglo[i];
     }
     cout<<endl<<endl;
@@ -46,8 +53,7 @@ int problema_2(){
     const int tam=200;
     char *arreglo=crear_cadena(tam);
     int contador[26];
-    unsigned int semilla=15324;
-    generar_imprimir_letras(arreglo, semilla, tam);
+    generar_imprimir_letras(arreglo, tam);
     contarLetras(arreglo, contador,tam);
     liberarCadena(arreglo);
     imprimirFrecuencias(contador);
@@ -173,10 +179,9 @@ void leerMatriz(int** matriz, int n) {
 }
 
 void imprimirMatriz(int** matriz, int n) {
-    cout << "Matriz ingresada:"<<endl;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            cout << matriz[i][j] << " ";
+            cout << matriz[i][j] << "\t";
         }
         cout << endl;
     }
@@ -232,12 +237,95 @@ int Problema_12(){
     cin>>n;
     int **matriz=crear_Matriz(n,n);
     leerMatriz(matriz,n);
+    cout << "Matriz ingresada:"<<endl;
     imprimirMatriz(matriz,n);
     if (Cuadrado_magico(matriz,n)){
         cout<<"Es un cuadrado magico."<<endl;
     }
     else{cout<<"No es un cuadrado magico."<<endl;}
     liberar_matriz(matriz,n);
+    return 0;
+}
+void Matrizsucesiva(int**matriz,int n){
+    int num=0;
+    for (int i=0;i<n;i++){
+        for (int j=0;j<n;j++){
+            matriz[i][j]=++num;
+        }
+    }
+}
+int **Rotar_matriz(int** matriz, int n){
+    int **rotada=crear_Matriz(n,n);
+    for (int i=0;i<n;i++){
+        for (int j=0;j<n;j++){
+            rotada[j][n-1-i]=matriz[i][j];
+        }
+    }
+    return rotada;
+}
+void Problema_14(){
+    int n=5;
+    int **matriz=crear_Matriz(n,n);
+    Matrizsucesiva(matriz,n);
+
+    cout << "Matriz original:"<<endl;
+    imprimirMatriz(matriz,n);
+    int **M90=Rotar_matriz(matriz,n);
+    liberar_matriz(matriz,n);
+
+    cout << "Matriz rotada 90° grados:"<<endl;
+    imprimirMatriz(M90,n);
+    int **M180=Rotar_matriz(M90,n);
+    liberar_matriz(M90,n);
+
+    cout << "Matriz rotada 180° grados:"<<endl;
+    imprimirMatriz(M180,n);
+    int **M270=Rotar_matriz(M180,n);
+    liberar_matriz(M180,n);
+
+    cout << "Matriz rotada 270° grados:"<<endl;
+    imprimirMatriz(M270,n);
+    liberar_matriz(M270,n);
+
+}
+int combinatoria(int n,int r){
+    int combina;
+    combina=(factorial(n))/(factorial(r)*factorial(n-r));
+    return combina;
+}
+int Problema_16(){
+    int n,posibles;
+    cout<<"Ingrese el tamaño de la matriz a verificar los posibles caminos: ";
+    cin>>n;
+    posibles=combinatoria(2*n,n);
+    cout<< "Los posibles caminos de una matriz "<<n<<"*"<<n<<" son: "<<posibles<<endl;
+    return 0;
+}
+void eliminar_digito(int*arreglo, int &tama, int pos){
+    for (int i=pos;i<tama;i++){
+        arreglo[i]=arreglo[i+1];
+    }
+    tama--;
+}
+void Permutacion(int n){
+    int arreglo[10]={0,1,2,3,4,5,6,7,8,9};
+    int tama=10;
+    cout<<"La permutacion numero"<<n<<"es: "<<endl;
+    n=n-1;
+    for(int i=9;i>=0;i--){
+        int pos=n/factorial(i);
+        n=n%factorial(i);
+        cout<< arreglo[pos];
+        eliminar_digito(arreglo,tama,pos);
+
+    }
+    cout<<endl;
+}
+int Problema_18(){
+    int n;
+    cout<<"Ingrese el numero de la permutación: "<<endl;
+    cin>>n;
+    Permutacion(n);
     return 0;
 }
 int menu(){
@@ -269,13 +357,13 @@ int menu(){
             Problema_12();
             break;
         case 14:
-  //          Problema_14();
+            Problema_14();
             break;
         case 16:
-//            Problema_16();
+            Problema_16();
             break;
         case 18:
-//            Problema_18();
+            Problema_18();
             break;
         case 19:
             d=5;

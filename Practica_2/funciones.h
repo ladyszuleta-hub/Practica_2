@@ -4,10 +4,10 @@
 int menu();
 char *cadena(const int tamaño);
 void liberarCadena(char*& cadena);
+int factorial(int n);
 int **crear_Matriz(int ancho, int alto);
 void liberar_matriz(int** &matriz, int filas);
-unsigned int aleatorio(unsigned int &semilla);
-void generar_imprimir_letras(char *arreglo, unsigned int &semilla, int tam);
+void generar_imprimir_letras(char *arreglo, int tam);
 void contarLetras(char *letras, int *contador);
 void imprimirFrecuencias(int *contador);
 int problema_2();
@@ -23,8 +23,13 @@ int Problema_12();
 bool Cuadrado_magico(int** matriz, int n);
 void imprimirMatriz(int** matriz, int n);
 void leerMatriz(int** matriz, int n);
-int Problema_14();
+void Problema_14();
+int **Rotar_matriz(int** matriz, int n);
+void Matrizsucesiva(int**matriz,int n);
 int Problema_16();
+int combinatoria(int n,int r);
 int Problema_18();
+void eliminar_digito(int*arreglo, int &tama, int pos);
+void Permutacion(int n);
 
 #endif // FUNCIONES_H
