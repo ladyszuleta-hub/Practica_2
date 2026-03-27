@@ -1,0 +1,89 @@
+// C++ code
+//
+String texto = "";
+String romano="";
+void ejercicio6(){
+  Serial.println("Ingrese una cadena:");
+  while (Serial.available()==0);
+  texto= Serial.readString();
+  Serial.print("Original: ");
+  Serial.println(texto);
+  for (int i=0;i <texto.length();i++){
+    if (texto[i]>='a' && texto[i]<='z'){
+    texto[i]=texto[i]-32;
+    }      
+  }
+  Serial.print("En mayusculas: ");
+  Serial.println(texto);
+}
+int valores(char c){
+  if (c == 'I') return 1;
+  if (c == 'V') return 5;
+  if (c == 'X') return 10;
+  if (c == 'L') return 50;
+  if (c == 'C') return 100;
+  if (c == 'D') return 500;
+  if (c == 'M') return 1000;
+  return 0;
+}
+int convertirRomano(String r) {
+  int total = 0;
+
+  for (int i = 0; i < r.length(); i++) {
+    if (i + 1 < r.length() && valores(r[i]) < valores(r[i + 1])) {
+      total -= valores(r[i]);
+    } else {
+      total += valores(r[i]);
+    }
+  }
+  return total;
+}
+
+void ejercicio10() {
+
+  Serial.println("Ingrese un numero romano:");
+
+  while (Serial.available() == 0);
+  romano = Serial.readString();
+  romano.trim();
+
+  Serial.print("El numero ingresado fue: ");
+  Serial.println(romano);
+
+  int resultado = convertirRomano(romano);
+
+  Serial.print("Que corresponde a: ");
+  Serial.println(resultado);
+}
+
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("MENU:");
+  Serial.println("1. Convertir a MAYUSCULAS");
+  Serial.println("2. Romano a Arabigo");
+  Serial.println("Ingrese opcion:");
+}
+void loop() {
+
+ if (Serial.available() > 0) {
+
+    int opcion = Serial.parseInt();
+
+    if (opcion == 1) {
+      ejercicio6();
+    } 
+    else if (opcion == 2) {
+      ejercicio10();
+    } 
+    else {
+      Serial.println("Opcion invalida");
+    }
+
+    Serial.println("\nMENU:");
+    Serial.println("1. Convertir a MAYUSCULAS");
+    Serial.println("2. Romano a Arabigo");
+    Serial.println("Ingrese opcion:");
+  }
+  
+}
